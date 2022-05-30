@@ -1,0 +1,4 @@
+name: autoball-backend
+recipe: laravel
+config:
+  webroot: app/public
