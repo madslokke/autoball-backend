@@ -18,8 +18,8 @@ Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 
 
-Route::get('/players/{id}', 'PlayerController@getPlayerByWeaponId');
-Route::post('/players/{id}/refill', 'PlayerController@refillWeapon');
+Route::get('/weapons/{id}', 'PlayerController@getPlayerByWeaponId');
+Route::post('/weapons/{id}/refill', 'PlayerController@refillWeapon');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', 'AuthController@me');

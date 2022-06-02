@@ -6,22 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Player;
 use App\Models\Product;
 use App\Models\Weapon;
-use Illuminate\Http\Request;
 
 class PlayerController extends Controller {
 
-    public function getPlayerByWeaponId($playerId) {
-        $player = Player::query()->find($playerId);
-
+    public function getPlayerByWeaponId($nfcId) {
+        $weapon = Weapon::query()->where('nfc_id', '=', $nfcId)->firstOrFail();
+        $player = Player::query()->where('weapon_id', '=', $weapon->id)->orderBy('created_at', 'desc')->firstOrFail();
         $product = Product::query()->find($player->product_id);
+
         return [
             'player' => $player,
-            'product' => $product
+            'product' => $product,
+            'weapon' => $weapon,
         ];
     }
 
-    public function refillWeapon($playerId) {
-        $player = Player::query()->find($playerId);
+    public function refillWeapon($nfcId) {
+        $weapon = Weapon::query()->where('nfc_id', '=', $nfcId)->firstOrFail();
+        $player = Player::query()->where('weapon_id', '=', $weapon->id)->orderBy('created_at', 'desc')->firstOrFail();
         $product = Product::query()->find($player->product_id);
         if ($product->bullets <= $player->bullets) {
             return [
