@@ -25,11 +25,7 @@ class PlayerController extends Controller {
         $weapon = Weapon::query()->where('nfc_id', '=', $nfcId)->firstOrFail();
         $player = Player::query()->where('weapon_id', '=', $weapon->id)->orderBy('created_at', 'desc')->firstOrFail();
         $product = Product::query()->find($player->product_id);
-        return [
-            'player' => $player,
-            'product' => $product,
-            'weapon' => $weapon,
-        ];
+
         if ($product->bullets <= $player->bullets) {
             return [
                 'status' => 'error',
