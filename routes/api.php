@@ -14,13 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', 'AuthController@register');
-Route::post('/login', 'AuthController@login');
-
-
 Route::get('/weapons/{id}', 'PlayerController@getPlayerByWeaponId');
 Route::post('/weapons/{id}/refill', 'PlayerController@refillWeapon');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/me', 'AuthController@me');
-});
+Route::post('/teams', 'TeamController@createTeam');

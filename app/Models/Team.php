@@ -16,11 +16,12 @@ class Team extends Model {
      */
     protected $fillable = [
         'name',
-        'startDate',
+        'start_date',
         'email',
         'active',
-        'phoneNumber',
-        'area',
+        'phone_number',
+        'playing_field',
+        'instructor'
     ];
 
     /**
