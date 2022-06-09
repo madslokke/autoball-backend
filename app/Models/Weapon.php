@@ -16,6 +16,7 @@ class Weapon extends Model {
      */
     protected $fillable = [
         'name',
+        'nfc_id'
     ];
 
 }

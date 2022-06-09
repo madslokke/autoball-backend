@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\PlayerController;
+use App\Http\Controllers\Api\WeaponController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::middleware('auth:sanctum')->apiResource(
+    'weapons',
+    WeaponController::class
+);
+
+Route::middleware('auth:sanctum')->post('/teams', 'TeamController@createTeam');
 
 Route::get('/weapons/{id}', 'PlayerController@getPlayerByWeaponId');
 Route::post('/weapons/{id}/refill', 'PlayerController@refillWeapon');
