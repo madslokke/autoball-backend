@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->apiResource(
 
 Route::middleware('auth:sanctum')->post('/teams', 'TeamController@createTeam');
 
-Route::get('/weapons/{id}', 'PlayerController@getPlayerByWeaponId');
-Route::post('/weapons/{id}/refill', 'PlayerController@refillWeapon');
+Route::get('/players/weapons/{id}', 'PlayerController@getPlayerByWeaponId');
+Route::post('/players/weapons/{id}/refill', 'PlayerController@refillWeapon');
 
 Route::post('/teams', 'TeamController@createTeam');
