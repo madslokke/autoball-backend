@@ -33,4 +33,7 @@ class Team extends Model {
         'active' => false,
     ];
 
+    public function players() {
+        return $this->hasMany(Player::class);
+    }
 }

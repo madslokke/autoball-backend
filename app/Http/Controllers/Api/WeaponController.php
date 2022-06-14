@@ -11,6 +11,7 @@ class WeaponController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
@@ -48,7 +49,7 @@ class WeaponController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Weapon $weapon) {
-        //
+        return new Response($weapon);
     }
 
     /**
@@ -78,5 +79,6 @@ class WeaponController extends Controller {
      */
     public function destroy(Weapon $weapon) {
         $weapon->delete();
+        return new Response('success');
     }
 }

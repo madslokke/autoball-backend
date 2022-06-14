@@ -19,4 +19,7 @@ class Weapon extends Model {
         'nfc_id'
     ];
 
+    public function players() {
+        return $this->hasMany(Player::class);
+    }
 }

@@ -17,9 +17,28 @@ class Player extends Model {
     protected $fillable = [
         'name',
         'bullets',
+        'weapon_id',
+        'product_id'
+    ];
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'bullets' => 0,
     ];
 
     public function weapon() {
         return $this->belongsTo(Weapon::class);
+    }
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function team() {
+        return $this->belongsTo(Team::class);
     }
 }
