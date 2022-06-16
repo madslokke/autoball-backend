@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TeamResource;
-use App\Models\Team;
+use App\Models\PlayingField;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class TeamController extends Controller {
+class PlayingFieldController extends Controller {
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +17,7 @@ class TeamController extends Controller {
     public function index(Request $request) {
         $user = $request->user();
 
-        return new Response(TeamResource::collection(Team::query()->where('company_id', '=', $user->company_id)->get()));
+        return new Response(PlayingField::query()->where('company_id', '=', $user->company_id)->paginate(25));
     }
 
     /**
@@ -29,18 +28,15 @@ class TeamController extends Controller {
      */
     public function store(Request $request) {
         $this->validate($request, [
-            'name' => 'required',
-            'start_date' => 'required',
-            'playing_field_id' => 'required'
+            'name' => 'required'
         ]);
         $companyId = $request->user()->company_id;
 
         $input = $request->all();
-        $team = new Team();
-        $team->fill($input);
-        $team->company_id = $companyId;
-        $team->team_code = random_int(0, 999999);
-        $team->save();
+        $playingField = new PlayingField();
+        $playingField->fill($input);
+        $playingField->company_id = $companyId;
+        $playingField->save();
 
         return new Response('success');
     }
@@ -48,29 +44,27 @@ class TeamController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Team $team
+     * @param \App\Models\PlayingField $playingField
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team) {
-        return new Response($team);
+    public function show(PlayingField $playingField) {
+        return new Response($playingField);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Team $team
+     * @param \App\Models\PlayingField $playingField
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Team $team) {
+    public function update(Request $request, PlayingField $playingField) {
         $this->validate($request, [
-            'name' => 'required',
-            'start_date' => 'required',
-            'playing_field' => 'required'
+            'name' => 'required'
         ]);
 
-        $team->fill($request->all());
-        $team->save();
+        $playingField->fill($request->all());
+        $playingField->save();
 
         return new Response('success');
     }
@@ -78,11 +72,11 @@ class TeamController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Team $team
+     * @param \App\Models\PlayingField $playingField
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team) {
-        $team->delete();
+    public function destroy(PlayingField $playingField) {
+        $playingField->delete();
         return new Response('success');
     }
 }

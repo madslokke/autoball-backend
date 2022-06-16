@@ -2,7 +2,6 @@
 
 use App\Models\Company;
 use App\Models\Product;
-use App\Models\Team;
 use App\Models\Weapon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,7 +20,7 @@ return new class extends Migration {
             $table->dropColumn('teamId');
             $table->dropColumn('productId');
             $table->foreignIdFor(Weapon::class);
-            $table->foreignIdFor(Team::class);
+            $table->foreignIdFor(Product::class);
             $table->foreignIdFor(Product::class);
         });
 

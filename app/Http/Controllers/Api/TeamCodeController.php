@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TeamResource;
 use App\Models\Player;
 use App\Models\Product;
-use App\Models\Team;
 use App\Models\Weapon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,7 +18,7 @@ class TeamCodeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function showTeamByTeamCode(Request $request, $teamCode) {
-        $team = Team::query()->where('team_code', '=', $teamCode)->first();
+        $team = Product::query()->where('team_code', '=', $teamCode)->first();
         return new Response(new TeamResource($team));
     }
 
@@ -31,7 +30,7 @@ class TeamCodeController extends Controller {
      */
     public function showWeaponsByTeamCode(Request $request, $teamCode) {
         $team =
-            Team::query()->where('team_code', '=', $teamCode)->firstOrFail();
+            Product::query()->where('team_code', '=', $teamCode)->firstOrFail();
         $companyId = $team->company_id;
         $weapons =
             Weapon::query()
@@ -53,7 +52,7 @@ class TeamCodeController extends Controller {
      */
     public function showProductsByTeamCode(Request $request, $teamCode) {
         $team =
-            Team::query()->where('team_code', '=', $teamCode)->firstOrFail();
+            Product::query()->where('team_code', '=', $teamCode)->firstOrFail();
         $companyId = $team->company_id;
         $products =
             Product::query()->where('company_id', '=', $companyId)->get();
@@ -75,7 +74,7 @@ class TeamCodeController extends Controller {
         ]);
 
         $team =
-            Team::query()->where('team_code', '=', $teamCode)->firstOrFail();
+            Product::query()->where('team_code', '=', $teamCode)->firstOrFail();
 
         $input = $request->all();
         $player = new Player();

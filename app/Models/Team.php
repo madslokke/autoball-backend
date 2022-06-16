@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model {
 
+    const STATUS_PREPARING = 1;
+    const STATUS_INPROGRESS = 2;
+    const STATUS_NEEDPAYMENT = 3;
+    const STATUS_CLOSED = 4;
+    const STATUS_CANCELLED = 5;
+
     use SoftDeletes;
 
     /**
@@ -18,9 +24,8 @@ class Team extends Model {
         'name',
         'start_date',
         'email',
-        'active',
         'phone_number',
-        'playing_field',
+        'playing_field_id',
         'instructor'
     ];
 
@@ -30,10 +35,14 @@ class Team extends Model {
      * @var array
      */
     protected $attributes = [
-        'active' => false,
+        'status' => 1,
     ];
 
     public function players() {
         return $this->hasMany(Player::class);
+    }
+
+    public function playingField() {
+        return $this->belongsTo(PlayingField::class);
     }
 }

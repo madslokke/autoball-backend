@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\PlayingFieldController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ReloadStationController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\WeaponController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +24,18 @@ Route::post('/players/weapons/{id}/refill', 'PlayerController@refillWeapon');
 Route::middleware('auth:sanctum')->apiResource(
     'weapons',
     WeaponController::class
+);
+Route::middleware('auth:sanctum')->apiResource(
+    'products',
+    ProductController::class
+);
+Route::middleware('auth:sanctum')->apiResource(
+    'reloadStations',
+    ReloadStationController::class
+);
+Route::middleware('auth:sanctum')->apiResource(
+    'playingFields',
+    PlayingFieldController::class
 );
 
 Route::get('teams/{teamCode}/info', 'TeamCodeController@showTeamByTeamCode');

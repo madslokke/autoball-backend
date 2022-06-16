@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TeamResource extends JsonResource {
+class ReloadStationResource extends JsonResource {
     /**
      * Transform the resource into an array.
      *
@@ -16,11 +15,8 @@ class TeamResource extends JsonResource {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'start_date' => $this->start_date,
-            'playing_field' => new PlayingFieldResource($this->playingField),
-            'team_code' => $this->team_code,
-            'players' => PlayerResource::collection($this->players),
-            'status' => $this->status
+            'bullets' => $this->bullets,
+            'playing_field' => new PlayingFieldResource($this->playingField)
         ];
     }
 }
