@@ -52,7 +52,7 @@ class TeamController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Team $team) {
-        return new Response($team);
+        return new Response(new TeamResource($team));
     }
 
     /**

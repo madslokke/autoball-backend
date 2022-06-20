@@ -16,7 +16,6 @@ class Player extends Model {
      */
     protected $fillable = [
         'name',
-        'bullets',
         'weapon_id',
         'product_id'
     ];

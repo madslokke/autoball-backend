@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\PlayingFieldController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ReloadStationController;
@@ -18,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/players/weapons/{id}', 'PlayerController@getPlayerByWeaponId');
-Route::post('/players/weapons/{id}/refill', 'PlayerController@refillWeapon');
+Route::get('/players/weapons/{id}', 'PlayerWeaponController@getPlayerByWeaponId');
+Route::post('/players/weapons/{id}/refill', 'PlayerWeaponController@refillWeapon');
 
 Route::middleware('auth:sanctum')->apiResource(
     'weapons',
@@ -37,7 +38,14 @@ Route::middleware('auth:sanctum')->apiResource(
     'playingFields',
     PlayingFieldController::class
 );
+Route::middleware('auth:sanctum')->apiResource(
+    'teams.players',
+    PlayerController::class
+);
 
+Route::middleware('auth:sanctum')->get('me', 'UserController@me');
+
+Route::middleware('auth:sanctum')->get('teams/{id}/reloadStations', 'ReloadStationController@getByTeamId');
 Route::get('teams/{teamCode}/info', 'TeamCodeController@showTeamByTeamCode');
 Route::get('teams/{teamCode}/weapons', 'TeamCodeController@showWeaponsByTeamCode');
 Route::get('teams/{teamCode}/products', 'TeamCodeController@showProductsByTeamCode');

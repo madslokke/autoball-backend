@@ -73,8 +73,7 @@ class TeamCodeController extends Controller {
             'product_id' => 'required'
         ]);
 
-        $team =
-            Product::query()->where('team_code', '=', $teamCode)->firstOrFail();
+        $team = Product::query()->where('team_code', '=', $teamCode)->firstOrFail();
 
         $input = $request->all();
         $player = new Player();
@@ -83,10 +82,6 @@ class TeamCodeController extends Controller {
         $player->save();
 
         return new Response('success');
-
-        $products =
-            Product::query()->where('company_id', '=', $companyId)->get();
-        return new Response($products);
     }
 
 

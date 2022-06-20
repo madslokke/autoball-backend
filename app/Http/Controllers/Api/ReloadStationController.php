@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ReloadStationResource;
 use App\Models\Product;
 use App\Models\ReloadStation;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -19,7 +20,9 @@ class ReloadStationController extends Controller {
     public function index(Request $request) {
         $user = $request->user();
 
-        return new Response(ReloadStationResource::collection(ReloadStation::query()->where('company_id', '=', $user->company_id)->get()));
+        return new Response(ReloadStationResource::collection(ReloadStation::query()
+            ->where('company_id', '=', $user->company_id)
+            ->get()));
     }
 
     /**
@@ -84,5 +87,16 @@ class ReloadStationController extends Controller {
     public function destroy(ReloadStation $reloadStation) {
         $reloadStation->delete();
         return new Response('success');
+    }
+
+    public function getByTeamId(Request $request, $id) {
+        $user = $request->user();
+        $team =
+            Team::query()
+                ->where('id', '=', $id)
+                ->where('company_id', '=', $user->company_id)
+                ->firstOrFail();
+
+        return new Response($team->playingField->reloadStations);
     }
 }

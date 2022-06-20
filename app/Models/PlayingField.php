@@ -17,4 +17,8 @@ class PlayingField extends Model {
     protected $fillable = [
         'name'
     ];
+
+    public function reloadStations() {
+        return $this->hasMany(ReloadStation::class);
+    }
 }
