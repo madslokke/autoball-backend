@@ -3,41 +3,84 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PlayerResource;
 use App\Models\Player;
-use App\Models\Product;
-use App\Models\Weapon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PlayerController extends Controller {
-
-    public function getPlayerByWeaponId($nfcId) {
-        $weapon = Weapon::query()->where('nfc_id', '=', $nfcId)->firstOrFail();
-        $player = Player::query()->where('weapon_id', '=', $weapon->id)->orderBy('created_at', 'desc')->firstOrFail();
-        $product = Product::query()->find($player->product_id);
-
-        return [
-            'player' => $player,
-            'product' => $product,
-            'weapon' => $weapon,
-        ];
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($teamId) {
+        return new Response(PlayerResource::collection(Player::query()
+            ->where('team_id', '=', $teamId)
+            ->get()));
     }
 
-    public function refillWeapon($nfcId) {
-        $weapon = Weapon::query()->where('nfc_id', '=', $nfcId)->firstOrFail();
-        $player = Player::query()->where('weapon_id', '=', $weapon->id)->orderBy('created_at', 'desc')->firstOrFail();
-        $product = Product::query()->find($player->product_id);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, $teamId) {
 
-        if ($product->bullets <= $player->bullets) {
-            return [
-                'status' => 'error',
-                'error' => 'hit limit of bullets'
-            ];
-        }
+        $this->validate($request, [
+            'name' => 'required',
+            'weapon_id' => 'required',
+            'product_id' => 'required'
+        ]);
 
-        $player->bullets += 100;
+        $input = $request->all();
+        $player = new Player();
+        $player->fill($input);
+        $player->team_id = $teamId;
         $player->save();
-        return [
-            'status' => 'success'
-        ];
+
+        return new Response('success');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\Player $player
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Player $player) {
+        return new Response($player);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Player $player
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Player $player) {
+        $this->validate($request, [
+            'name' => 'required',
+            'weapon_id' => 'required',
+            'product_id' => 'required'
+        ]);
+
+        $player->fill($request->all());
+        $player->save();
+
+        return new Response('success');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Models\Player $player
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Player $player) {
+        $player->delete();
+        return new Response('success');
+    }
 }
