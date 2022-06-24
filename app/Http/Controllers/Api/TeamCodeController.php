@@ -19,7 +19,7 @@ class TeamCodeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function showTeamByTeamCode(Request $request, $teamCode) {
-        $team = Team::query()->where('team_code', '=', $teamCode)->first();
+        $team = Team::query()->where('team_code', '=', $teamCode)->whereIn('status', [2,3])->first();
         return new Response(new TeamResource($team));
     }
 
@@ -38,7 +38,7 @@ class TeamCodeController extends Controller {
                 ->where('company_id', '=', $companyId)
                 ->whereHas('players', function ($query) {
                     $query->whereHas('team', function ($query) {
-                        $query->where('active', '=', 1);
+                        $query->whereIn('status', [2, 3]);
                     });
                 }, '=', 0)
                 ->get();
@@ -74,7 +74,8 @@ class TeamCodeController extends Controller {
             'product_id' => 'required'
         ]);
 
-        $team = Team::query()->where('team_code', '=', $teamCode)->firstOrFail();
+        $team =
+            Team::query()->where('team_code', '=', $teamCode)->firstOrFail();
 
         $input = $request->all();
         $player = new Player();

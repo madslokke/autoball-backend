@@ -85,4 +85,22 @@ class TeamController extends Controller {
         $team->delete();
         return new Response('success');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(Request $request, $id) {
+
+        $status = $request->get('status');
+        $team = Team::query()->where('id', '=', $id)->firstOrFail();
+
+        $team->status = $status;
+        $team->save();
+
+        return new Response('success');
+    }
 }

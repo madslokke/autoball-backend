@@ -49,7 +49,9 @@ Route::middleware('auth:sanctum')->get('teams/{id}/reloadStations', 'ReloadStati
 Route::get('teams/{teamCode}/info', 'TeamCodeController@showTeamByTeamCode');
 Route::get('teams/{teamCode}/weapons', 'TeamCodeController@showWeaponsByTeamCode');
 Route::get('teams/{teamCode}/products', 'TeamCodeController@showProductsByTeamCode');
-Route::post('teams/{teamCode}/players', 'TeamCodeController@createPlayer');
+Route::post('teams/{teamCode}/createPlayer', 'TeamCodeController@createPlayer');
+Route::post('teams/{id}/updateStatus', 'TeamController@updateStatus');
+Route::post('teams/{teamId}/players/{playerId}/setAsPaid', 'PlayerController@setAsPaid');
 Route::middleware('auth:sanctum')->apiResource(
     'teams',
     TeamController::class

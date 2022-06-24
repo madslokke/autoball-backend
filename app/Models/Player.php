@@ -27,6 +27,7 @@ class Player extends Model {
      */
     protected $attributes = [
         'bullets' => 0,
+        'is_paid' => 0,
     ];
 
     public function weapon() {
@@ -38,6 +39,6 @@ class Player extends Model {
     }
 
     public function team() {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Team::class);
     }
 }

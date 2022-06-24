@@ -83,4 +83,14 @@ class PlayerController extends Controller {
         $player->delete();
         return new Response('success');
     }
+
+
+    public function setAsPaid(Request $request, $teamId, $playerId) {
+        $player = Player::query()->where('id', '=', $playerId)->firstOrFail();
+        $player->is_paid = true;
+        $player->save();
+        return new Response('success');
+    }
+
+
 }
