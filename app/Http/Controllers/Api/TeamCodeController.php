@@ -38,7 +38,7 @@ class TeamCodeController extends Controller {
                 ->where('company_id', '=', $companyId)
                 ->whereHas('players', function ($query) {
                     $query->whereHas('team', function ($query) {
-                        $query->whereIn('status', [2, 3]);
+                        $query->where('status', 2);
                     });
                 }, '=', 0)
                 ->get();
