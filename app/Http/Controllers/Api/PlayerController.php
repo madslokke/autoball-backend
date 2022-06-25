@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlayerResource;
 use App\Models\Player;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -89,8 +90,8 @@ class PlayerController extends Controller {
         $player = Player::query()->where('id', '=', $playerId)->firstOrFail();
         $player->is_paid = true;
         $player->save();
-        $team = $player->team()->get();
-        $players = $team->players()->get();
+        $team = $player->team;
+        $players = $team->players->get();
 
         $notPaidPlayers = array_filter($players, function ($p) {
             return $p->is_paid;
