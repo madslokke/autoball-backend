@@ -100,6 +100,7 @@ class PlayerController extends Controller {
         if ($notPaidPlayers->isEmpty()) {
             $team->status = 4;
             $team->save();
+            return new Response('success1');
         }
 
         return new Response('success');
