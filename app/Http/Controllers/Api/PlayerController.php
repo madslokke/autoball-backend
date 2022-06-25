@@ -93,11 +93,11 @@ class PlayerController extends Controller {
         $team = $player->team;
         $players = $team->players;
 
-        $notPaidPlayers = array_filter($players, function ($p) {
-            return $p->is_paid;
+        $notPaidPlayers = $players->filter(function ($value, $key) {
+            return $value->is_paid;
         });
 
-        if (empty($notPaidPlayers)) {
+        if ($notPaidPlayers->isEmpty()) {
             $team->status = 4;
             $team->save();
         }
