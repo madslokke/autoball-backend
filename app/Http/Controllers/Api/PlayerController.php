@@ -89,8 +89,8 @@ class PlayerController extends Controller {
         $player = Player::query()->where('id', '=', $playerId)->firstOrFail();
         $player->is_paid = true;
         $player->save();
-        $team = $player->team();
-        $players = $team->players();
+        $team = $player->team()->get();
+        $players = $team->players()->get();
 
         $notPaidPlayers = array_filter($players, function ($p) {
             return $p->is_paid;
