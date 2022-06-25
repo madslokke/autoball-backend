@@ -91,7 +91,7 @@ class PlayerController extends Controller {
         $player->is_paid = true;
         $player->save();
         $team = $player->team;
-        $players = $team->players->get();
+        $players = $team->players;
 
         $notPaidPlayers = array_filter($players, function ($p) {
             return $p->is_paid;
