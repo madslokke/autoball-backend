@@ -97,7 +97,7 @@ class PlayerController extends Controller {
             return !$value->is_paid;
         });
 
-        if ($notPaidPlayers->isEmpty()) {
+        if ($notPaidPlayers->isEmpty() && $team->status === 3) {
             $team->status = 4;
             $team->save();
         }
