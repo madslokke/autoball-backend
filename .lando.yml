@@ -10,3 +10,20 @@ config:
   xdebug: false
   config:
     database: mysql
+proxy:
+  appserver:
+    - backend.autoball.lndo.site
+  mailhog:
+    - mail.autoball.lndo.site
+services:
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver
+    portforward: true
+  appserver:
+    overrides:
+      environment:
+        PHP_IDE_CONFIG: "serverName=appserver"
+        LANDO_HOST_IP: "host.docker.internal"
+        XDEBUG_CONFIG: "discover_client_host=0 client_host=host.docker.internal idekey=PHPSTORM"

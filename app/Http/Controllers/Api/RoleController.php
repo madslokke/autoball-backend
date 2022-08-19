@@ -4,22 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UserController extends Controller {
+class RoleController extends Controller {
   /**
    * Display a listing of the resource.
    *
-   * @param \Illuminate\Http\Request $request
    * @return \Illuminate\Http\Response
    */
-  public function index(Request $request) {
-
-    $user = $request->user();
-
-    return new Response(UserResource::collection(User::query()->where('company_id', '=', $user->company_id)->get()));
+  public function index() {
+    return new Response(Role::query()->get());
   }
 
   /**
@@ -38,8 +35,8 @@ class UserController extends Controller {
    * @param \App\Models\User $user
    * @return \Illuminate\Http\Response
    */
-  public function show(User $user) {
-    return new Response($user);
+  public function show(Role $role) {
+    return new Response($role);
   }
 
   /**
@@ -61,9 +58,5 @@ class UserController extends Controller {
    */
   public function destroy(User $user) {
     //
-  }
-
-  public function me(Request $request) {
-    return new Response(new UserResource($request->user()));
   }
 }

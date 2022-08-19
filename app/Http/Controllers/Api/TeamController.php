@@ -13,10 +13,14 @@ class TeamController extends Controller {
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|mixed
      */
     public function index(Request $request) {
         $user = $request->user();
+
+//        $data = Team::query()->where('company_id', '=', $user->company_id)->paginate(10);
+//
+//        return ['result' => TeamResource::collection($data)->response()->getData(true)];
 
         return new Response(TeamResource::collection(Team::query()->where('company_id', '=', $user->company_id)->get()));
     }

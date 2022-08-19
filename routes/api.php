@@ -4,7 +4,9 @@ use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\PlayingFieldController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ReloadStationController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\TeamController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WeaponController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,9 +41,26 @@ Route::middleware('auth:sanctum')->apiResource(
     PlayingFieldController::class
 );
 Route::middleware('auth:sanctum')->apiResource(
+  'teams',
+  TeamController::class
+);
+Route::middleware('auth:sanctum')->apiResource(
     'teams.players',
     PlayerController::class
 );
+Route::middleware('auth:sanctum')->apiResource(
+    'roles',
+    RoleController::class
+);
+
+Route::middleware('auth:sanctum')->apiResource(
+    'users',
+    UserController::class
+);
+Route::middleware('auth:sanctum')->post(
+    'invite', 'InviteController@invite'
+);
+Route::post('/registration', 'InviteController@register')->name('accept');
 
 Route::middleware('auth:sanctum')->get('me', 'UserController@me');
 
@@ -52,7 +71,4 @@ Route::get('teams/{teamCode}/products', 'TeamCodeController@showProductsByTeamCo
 Route::post('teams/{teamCode}/createPlayer', 'TeamCodeController@createPlayer');
 Route::post('teams/{id}/updateStatus', 'TeamController@updateStatus');
 Route::post('teams/{teamId}/players/{playerId}/setAsPaid', 'PlayerController@setAsPaid');
-Route::middleware('auth:sanctum')->apiResource(
-    'teams',
-    TeamController::class
-);
+
