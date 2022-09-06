@@ -16,4 +16,12 @@ class Invite extends Model {
         'role_id',
         'company_id'
     ];
+
+    public function company() {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
 }

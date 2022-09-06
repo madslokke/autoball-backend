@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\InviteController;
 use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\PlayingFieldController;
 use App\Http\Controllers\Api\ProductController;
@@ -57,10 +58,11 @@ Route::middleware('auth:sanctum')->apiResource(
     'users',
     UserController::class
 );
-Route::middleware('auth:sanctum')->post(
-    'invite', 'InviteController@invite'
-);
-Route::post('/registration', 'InviteController@register')->name('accept');
+Route::middleware('auth:sanctum')->get('invites', 'InviteController@index');
+Route::get('invites/{token}', 'InviteController@show');
+Route::post('invites/{token}', 'InviteController@createUser');
+Route::middleware('auth:sanctum')->post('invites', 'InviteController@store');
+Route::middleware('auth:sanctum')->delete('invites/{invite}', 'InviteController@destroy');
 
 Route::middleware('auth:sanctum')->get('me', 'UserController@me');
 

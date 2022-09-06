@@ -18,10 +18,6 @@ class TeamController extends Controller {
     public function index(Request $request) {
         $user = $request->user();
 
-//        $data = Team::query()->where('company_id', '=', $user->company_id)->paginate(10);
-//
-//        return ['result' => TeamResource::collection($data)->response()->getData(true)];
-
         return new Response(TeamResource::collection(Team::query()->where('company_id', '=', $user->company_id)->get()));
     }
 
