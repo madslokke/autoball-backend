@@ -45,12 +45,12 @@ class InviteController extends Controller {
         ]);
         $validator->after(function ($validator) use ($request) {
             if (Invite::where('email', $request->input('email'))->exists()) {
-                $validator->errors()->add('email', 'There exists an invite with this email!');
+                $validator->errors()->add('email', 'error!');
             }
         });
 
         if ($validator->fails()) {
-            return new Response('There exists an invite with this email');
+            throw new \Exception('There exists an user or invite with this email!');
         }
         do {
             $token = Str::random(20);
